@@ -1,5 +1,6 @@
 FROM python:3.10.14-bullseye
-WORKDIR /usr/src/app
+RUN mkdir -p /usr/src/app/fastapi_two
+WORKDIR /usr/src/app/fastapi_two
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 RUN pip install --upgrade pip

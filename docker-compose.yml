@@ -3,20 +3,29 @@ services:
     build:
       context: .
     ports:
-      - 81:81
+      - 80:80
       - 83:83
     volumes:
       - ./html/:/usr/share/nginx/html
       - ./nginx/conf.d/:/etc/nginx/conf.d/
       - ./images/:/data/www/images/
 
-  fastapi:
+  fastapi_one:
     build:
-      context: ./fastapi/
+      context: fastapi_one/
+    command: uvicorn app.main:app --host 0.0.0.0 --reload --port 81
+    volumes:
+      - ./fastapi_one/:/usr/src/app/fastapi_one
+    expose:
+      - 81
+#    ports:
+#      - 81:81
+
+  fastapi_two:
+    build:
+      context: fastapi_two/
     command: uvicorn app.main:app --host 0.0.0.0 --reload --port 82
     volumes:
-      - ./fastapi/:/usr/src/app/
+      - ./fastapi_two/:/usr/src/app/fastapi_two
     expose:
       - 82
-#    ports:
-#      - 82:82
