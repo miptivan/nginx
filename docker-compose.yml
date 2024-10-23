@@ -1,0 +1,22 @@
+services:
+  nginx:
+    build:
+      context: .
+    ports:
+      - 81:81
+      - 83:83
+    volumes:
+      - ./html/:/usr/share/nginx/html
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./images/:/data/www/images/
+
+  fastapi:
+    build:
+      context: ./fastapi/
+    command: uvicorn app.main:app --host 0.0.0.0 --reload --port 82
+    volumes:
+      - ./fastapi/:/usr/src/app/
+    expose:
+      - 82
+#    ports:
+#      - 82:82
